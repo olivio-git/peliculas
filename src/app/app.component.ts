@@ -9,7 +9,7 @@ import { Router } from '@angular/router';
 })
 export class AppComponent implements OnInit {
 
-  constructor(private dataService: DataServiceService,private router: Router) {}
+  constructor(private router: Router) {}
   ngOnInit() {
     //this.dataService.checkAuth();
     //this.router.navigate(['/']); // ruta de la página de inicio

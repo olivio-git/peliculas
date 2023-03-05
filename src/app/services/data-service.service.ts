@@ -8,79 +8,124 @@ import { User } from '../models/modelUser';
 import { firebaseConfig } from 'src/environments/firebaseConfig';
 import { getAllMovies } from '../controllers/controllersMovies';
 import { HttpClient } from '@angular/common/http';
+import { AngularFireDatabase } from '@angular/fire/compat/database';
+
 @Injectable({
   providedIn: 'root'
 })
 export class DataServiceService implements OnInit {
+  private initialState: DataService = {
+    movies: [],
+    user: {}
+  };
+  private stateSubject = new BehaviorSubject<DataService>(this.initialState);
+  state$ = this.stateSubject.asObservable();
+  
+  private initialUserTable: any = {};
+
+  private userTableSubject = new BehaviorSubject<any>(this.initialUserTable);
+  userTable$ = this.userTableSubject.asObservable();
 
   constructor(
     public http:HttpClient,
-    private afAuth: AngularFireAuth
+    private afAuth: AngularFireAuth,
+    private db: AngularFireDatabase
   ) {
-    firebase.initializeApp(firebaseConfig.firebase);
     this.getAllMoviesHandler();
+    firebase.initializeApp(firebaseConfig.firebase);
+    // Inicializar el subject de userTable
   }
 
-  private initialState:DataService={ //definimos nuestro estado en base a nuestro modelo DataService
-    movies:[],
-    user:{}
-  }
-  private stateSubject = new BehaviorSubject<DataService>(this.initialState); //definimos nuestro stateSubject
-  state$ = this.stateSubject.asObservable();
 
   ngOnInit() {
   }
-  async getAllMoviesHandler(){
+
+  async getAllMoviesHandler() {
     try {
-      const currenState=this.stateSubject.value;
-      const result=await getAllMovies(this.http);
+      const currentState = this.stateSubject.value;
+      const result = await getAllMovies(this.http);
       this.stateSubject.next({
-        ...currenState,
-        movies:result
+        ...currentState,
+        movies: result
       })
     } catch (error) {
-      
+      console.log(error);
     }
   }
+
   async signInWithGoogle() {
-    let obj:User;
+    let obj: User;
     const currentState = this.stateSubject.value;
+    const currentTable=this.userTableSubject.value;
+
     const provider = new firebase.auth.GoogleAuthProvider();
-    this.afAuth.signInWithPopup(provider)
-    .then(async(result)=>{ //usuario logeado
-      console.log(result.user)
-      const token = (result.user as any)._delegate.stsTokenManager.accessToken; //recuperar token
-      if(result.user){
-        obj={
+    await this.afAuth.signInWithPopup(provider)
+    .then(async(result) => {
+      const token = (result.user as any)._delegate.stsTokenManager.accessToken;
+      await localStorage.setItem('authToken', token);
+      if (result.user) {
+        obj = {
+          uid: result.user.uid,
           name: result.user.displayName,
-          email:result.user.email,
-          image:result.user.photoURL,
+          email: result.user.email,
+          image: result.user.photoURL
         }
-        await localStorage.setItem('authToken', token); //guardar mi token
         this.stateSubject.next({
           ...currentState,
-          user:{
+          user: {
             user: obj,
             token: token
           }
-        })  
+        });
+        const database = firebase.database();
+        const userRef = database.ref('Usuarios/' + result.user.uid);
+        userRef.once('value', (snapshot) => {
+        const userData = snapshot.val();
+        if (!userData) {
+          console.log('if');
+          const newUser = {  
+            name: result.user?.displayName,
+            email: result.user?.email,
+            cart: []
+          };
+          this.userTableSubject.next({
+            ...currentTable,
+            ...{ initialUserTable: newUser }
+          })        
+          userRef.set(newUser);
+        } else {
+          console.log('else');
+          userRef.on('value', (snapshot) => {
+            const userData = snapshot.val();
+            console.log(userData)
+            this.userTableSubject.next({
+              ...currentTable,
+              ...{ initialUserTable: userData }
+            });
+          });
+        }
+      });
       }
-    }) 
-  };
+    })
+    .catch((error) => {
+      console.log(error,'error');
+    })
+    console.log(currentTable)
+  }
 
   async signOut() {
     const currentState = this.stateSubject.value;
     await this.afAuth.signOut();
-    // Eliminar token de localStorage y propiedad user del servicio
     localStorage.removeItem('authToken');
     this.stateSubject.next({
       ...currentState,
-      user:{
-        user:'null',
-        token:'null'
+      user: {
+        user: {},
+        token: 'null'
       }
-    })
-  };
+    });
+    this.userTableSubject.next({});
+  }
 }
 
 

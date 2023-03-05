@@ -7,7 +7,6 @@ export const getAllMovies=(http:any)=>{
     return new Promise(async(resolve,reject)=>{
         try {
             await http.get(urls.getAllPeliculas).subscribe((data:any)=>{
-                
                 let allMovies:Pelicula[]=[];
                 data.forEach((movie:Pelicula)=>{
                     movie.backdrop_path=urls.urlImages+movie.backdrop_path;
