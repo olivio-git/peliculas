@@ -1,0 +1,30 @@
+<nav class="navbar navbar-expand-sm navbar-dark bg-dark">
+    <a class="navbar-brand" routerLink="/">Navbar</a>
+    <button class="navbar-toggler d-lg-none" type="button" data-toggle="collapse" data-target="#collapsibleNavId" aria-controls="collapsibleNavId"
+        aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="collapsibleNavId">
+        <ul class="navbar-nav mr-auto mt-2 mt-lg-0">
+            <li class="nav-item active">
+                <a class="nav-link" routerLink="/home">Home</a>
+            </li>
+            <li class="nav-item">
+                <select class="form-select" aria-label="Default select example">
+                    <option selected>Open this select menu</option>
+                  </select>
+            </li>
+        </ul>
+    </div>
+    <div>
+        <ng-container *ngIf="user">
+            <span>{{user.name}}</span>
+            <img [src]="user.image" alt="{{user.name}}">
+          </ng-container>
+    <button class="btn btn-primary" *ngIf="!user" (click)="this.dataService.signInWithGoogle()">Sign in with Google</button>
+    <button class="btn btn-warning" *ngIf="user" (click)="this.dataService.signOut()">Sign out</button>
+    </div>
+    <form class="form-inline my-2 my-lg-0">
+        <input class="form-control mr-sm-2" type="text" placeholder="Search">
+    </form>
+</nav>

@@ -1,0 +1,12 @@
+<div class="row">
+    <div class="col-12 container-cards" *ngIf="movies" >
+        <div class="card" *ngFor="let movie of movies">
+            <img src={{movie.backdrop_path}} class="card-img-top" alt="...">
+            <div class="card-body">
+              <h5 class="card-title">{{movie.title}}</h5>
+              <p class="card-text">{{movie.release_date}}</p>
+              <a href="#" class="btn btn-success">{{movie.id}}</a>
+            </div>
+          </div>
+    </div>
+</div>

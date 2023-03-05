@@ -1,0 +1,17 @@
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+.container-cards{
+    padding-left: 10px;
+    padding-top: 10px;
+    gap:10px;
+    display:grid;
+    grid-template-columns: repeat(4,1fr);
+    color: whitesmoke;
+}
+.card-body{
+    
+    background-color: black;
+}
