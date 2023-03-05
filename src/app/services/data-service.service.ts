@@ -6,7 +6,7 @@ import { AngularFireAuth } from '@angular/fire/compat/auth';
 import { DataService } from '../models/modelService';
 import { User } from '../models/modelUser';
 import { firebaseConfig } from 'src/environments/firebaseConfig';
-import { getAllMovies } from '../controllers/controllersMovies';
+import { getAllMovies, GetMovie } from '../controllers/controllersMovies';
 import { HttpClient } from '@angular/common/http';
 @Injectable({
   providedIn: 'root'
@@ -23,6 +23,7 @@ export class DataServiceService implements OnInit {
 
   private initialState:DataService={ //definimos nuestro estado en base a nuestro modelo DataService
     movies:[],
+    movieDetail:{},
     user:{}
   }
   private stateSubject = new BehaviorSubject<DataService>(this.initialState); //definimos nuestro stateSubject
@@ -42,6 +43,18 @@ export class DataServiceService implements OnInit {
       
     }
   }
+
+  async getMovie(key:any){
+    try{
+      const currentState=this.stateSubject.value;
+      const result=await GetMovie(this.http,key);
+      this.stateSubject.next({
+        ...currentState,
+        movieDetail:result
+      })
+    }catch(error){}
+  }
+
   async signInWithGoogle() {
     let obj:User;
     const currentState = this.stateSubject.value;

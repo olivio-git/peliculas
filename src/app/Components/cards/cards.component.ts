@@ -19,4 +19,7 @@ export class CardsComponent implements OnInit {
       }
     })
   }
+  detalles(key:any){
+    this.dataService.getMovie(key)
+  }
 }

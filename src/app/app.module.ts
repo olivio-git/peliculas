@@ -17,6 +17,7 @@ import { NavbarComponent } from './Components/navbar/navbar.component';
 import firebase from 'firebase/compat/app';
 import 'firebase/compat/auth';
 import { CardsComponent } from './Components/cards/cards.component';
+import { DetallesComponent } from './Components/detalles/detalles.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -25,7 +26,8 @@ import { CardsComponent } from './Components/cards/cards.component';
     FormRegisterComponent,
     HomeComponent,
     NavbarComponent,
-    CardsComponent
+    CardsComponent,
+    DetallesComponent
   ],
   imports: [
     BrowserModule,

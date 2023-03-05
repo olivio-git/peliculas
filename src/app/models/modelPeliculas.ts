@@ -1,4 +1,5 @@
 export interface Pelicula{
+    key:any,
     adult:any,
     backdrop_path:any,
     genre_ids:[],
