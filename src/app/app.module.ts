@@ -18,6 +18,8 @@ import firebase from 'firebase/compat/app';
 import 'firebase/compat/auth';
 import { CardsComponent } from './Components/cards/cards.component';
 import { DetallesComponent } from './Components/detalles/detalles.component';
+import { CartComponent } from './Components/cart/cart.component';
+import { ContCarComponent } from './Components/cont-car/cont-car.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -27,7 +29,9 @@ import { DetallesComponent } from './Components/detalles/detalles.component';
     HomeComponent,
     NavbarComponent,
     CardsComponent,
-    DetallesComponent
+    CartComponent,
+    DetallesComponent,
+    ContCarComponent
   ],
   imports: [
     BrowserModule,

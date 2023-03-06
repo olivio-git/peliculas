@@ -6,7 +6,10 @@
               <h5 class="card-title">{{movie.title}}</h5>
               <p class="card-text">{{movie.release_date}}</p>
               <p class="card-text">{{movie.key}}</p>
-              <a href="#" class="btn btn-success" (click)="detalles(movie.key)" routerLink="/detalles/{{movie.key}}" >Ver mas</a>
+              <a class="btn btn-success" (click)="detalles(movie.key)" routerLink="/detalles/{{movie.key}}" >Ver mas</a>
+              <a class="btn btn-warning" (click)="postCar(movie)">
+                Añadir al carrito
+              </a>
             </div>
           </div>
     </div>
