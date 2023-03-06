@@ -1,16 +1,21 @@
-<div class="row">
-    <div class="col-12 container-cards" *ngIf="movies" >
-        <div class="card" *ngFor="let movie of movies">
+<div class="page">
+  <div class="row justify-content-center pb-3 pt-3">
+    <div class="col-9 container-cards" *ngIf="movies" >
+          <div class="card" *ngFor="let movie of movies">
+            <div class="button-container">
+              <div class="row justify-content-center">
+                <div class="col-11"><i class="fa-solid fa-cart-shopping" (click)="postCar(movie)" ></i></div>
+                <div class="col-11"><i class="fa-solid fa-circle-info" (click)="detalles(movie.key)" routerLink="/detalles/{{movie.key}}"></i></div>
+                <div class="col-11"><i class="fa-solid fa-share-nodes"></i></div>
+              </div>
+            </div>
             <img [src]="movie.poster_path" class="card-img-top" alt="...">
             <div class="card-body">
-              <h5 class="card-title">{{movie.title}}</h5>
+              <h6 class="card-title text-center">{{movie.title}}</h6>
               <p class="card-text">{{movie.release_date}}</p>
-              <p class="card-text">{{movie.key}}</p>
-              <a class="btn btn-success" (click)="detalles(movie.key)" routerLink="/detalles/{{movie.key}}" >Ver mas</a>
-              <a class="btn btn-warning" (click)="postCar(movie)">
-                Añadir al carrito
-              </a>
             </div>
           </div>
+          
     </div>
+</div>
 </div>

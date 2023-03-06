@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { DataServiceService } from 'src/app/services/data-service.service';
 import { distinctUntilChanged } from 'rxjs/operators';
+import { Genero } from 'src/app/models/genero';
 
 @Component({
   selector: 'app-navbar',
@@ -10,6 +11,7 @@ import { distinctUntilChanged } from 'rxjs/operators';
 export class NavbarComponent implements OnInit {
   user: any;
   table:any;
+  genres:Genero[]=[]
   constructor(public dataService: DataServiceService) {
     this.dataService.state$.pipe(
       distinctUntilChanged((prev, curr) => prev.user.user === curr.user.user)
@@ -24,7 +26,12 @@ export class NavbarComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    
+    this.dataService.state$.subscribe(state=>{
+      this.genres=state.genres
+    })
+  }
+  Filter(id:any){
+    this.dataService.FilterMovies(id);
   }
 
   // login(): void {

@@ -1,4 +1,4 @@
-<nav class="navbar navbar-expand-sm navbar-dark bg-dark">
+<nav class="navbar navbar-expand-sm navbar-dark">
     <a class="navbar-brand" routerLink="/">Navbar</a>
     <button class="navbar-toggler d-lg-none" type="button" data-toggle="collapse" data-target="#collapsibleNavId" aria-controls="collapsibleNavId"
         aria-expanded="false" aria-label="Toggle navigation">
@@ -9,6 +9,14 @@
             <li class="nav-item active">
                 <a class="nav-link" routerLink="/home">Home</a>
             </li>
+            <li class="nav-item dropdown ">
+                <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                  Genero
+                </a>
+                <ul class="dropdown-menu">
+                  <li><a class="dropdown-item" *ngFor="let g of genres" (click)="Filter(g.id)" routerLink="/filtro" >{{g.name}}</a></li>
+                </ul>
+              </li>
             <li class="nav-item">
                 
             </li>
@@ -32,3 +40,5 @@
         <input class="form-control mr-sm-2" type="text" placeholder="Search">
     </form>
 </nav>
+
+

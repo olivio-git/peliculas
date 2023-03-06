@@ -1,5 +1,5 @@
 import { Injectable, OnInit } from '@angular/core';
-import { BehaviorSubject } from 'rxjs';
+import { BehaviorSubject, filter } from 'rxjs';
 import firebase from 'firebase/compat/app';
 import 'firebase/compat/auth';
 import { AngularFireAuth } from '@angular/fire/compat/auth';
@@ -25,7 +25,9 @@ export class DataServiceService implements OnInit {
     movieDetail:{},
     user:{},
     genres:[],
-    genresMovie:[]
+    genresMovie:[],
+    filterMovies:[],
+    filter:'Todas'
   }
   private stateSubject = new BehaviorSubject<DataService>(this.initialState); //definimos nuestro stateSubject
   state$ = this.stateSubject.asObservable();
@@ -56,7 +58,7 @@ export class DataServiceService implements OnInit {
       const result = await getAllMovies(this.http);
       this.stateSubject.next({
         ...currentState,
-        movies: result
+        movies: <Pelicula[]>result
       })
       this.GetAllGenres();
     } catch (error) {
@@ -156,6 +158,26 @@ export class DataServiceService implements OnInit {
     this.stateSubject.next({
       ...currentState,
       genresMovie:GenerosPeliculas
+    })
+  }
+
+  FilterMovies(id:any){
+    const currentState=this.stateSubject.value;
+    const Generos:Pelicula[]=[]
+    const f=currentState.movies.forEach((movie:Pelicula)=>{
+      let condicion=false
+      movie.genre_ids.forEach((g:any)=>{
+        if(g==id){condicion=true}
+      })
+      if(condicion){
+        Generos.push(movie)}
+      else{condicion=false}
+    })
+    console.log(Generos)
+    this.stateSubject.next({
+      ...currentState,
+      filterMovies:Generos,
+      filter:id
     })
   }
 

@@ -14,6 +14,7 @@ export class DetallesComponent implements OnInit {
     this.dataService.state$.subscribe(state=>{
       this.Movie=state.movieDetail,
       this.genres=state.genresMovie
+      console.log(this.Movie)
     })
   }
   Movie=<Pelicula>{}

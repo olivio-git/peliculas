@@ -1,9 +1,12 @@
 import { Genero } from "./genero"
+import { Pelicula } from "./modelPeliculas"
 
 export interface DataService{
-    movies:any,
+    movies:Pelicula[],
     movieDetail:any,
     user:any
     genres:Genero[],
-    genresMovie:any
+    genresMovie:any,
+    filterMovies:Pelicula[],
+    filter:any
 }
