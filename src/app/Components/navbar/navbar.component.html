@@ -19,7 +19,7 @@
                     <span>{{user.name}}</span>
                     <img [src]="user.image" alt="{{user.name}}">
                   </ng-container>
-                <button class="btn btn-primary" *ngIf="!user" (click)="this.dataService.signInWithGoogle()">Sign in with Google</button>
+                <button class="btn btn-primary" *ngIf="!user" (click)="this.dataService.signInWithGoogle()">Sign in with Google <i class="fa-brands fa-google"></i></button>
                 <button class="btn btn-warning" *ngIf="user" (click)="this.dataService.signOut()">Sign out</button>
                 <app-cont-car></app-cont-car>
             </li>
