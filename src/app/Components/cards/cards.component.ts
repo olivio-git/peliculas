@@ -9,13 +9,12 @@ import { DataServiceService } from 'src/app/services/data-service.service';
   styleUrls: ['./cards.component.css']
 })
 export class CardsComponent implements OnInit {
-  movies:Pelicula[]=[];
+  movies:any;
   constructor(private dataService: DataServiceService){}
   ngOnInit(): void {
     this.dataService.state$.subscribe(state=>{
       if(state.movies){
         this.movies=state.movies;
-        console.log(this.movies)
       }
     })
   }

@@ -10,7 +10,6 @@ import { DataServiceService } from 'src/app/services/data-service.service';
 export class DetallesComponent implements OnInit {
   constructor(private dataService:DataServiceService){}
   ngOnInit(): void {
-    this.Movie=<Pelicula>{}
     this.dataService.state$.subscribe(state=>{
       this.Movie=state.movieDetail
     })
