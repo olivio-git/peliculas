@@ -28,7 +28,8 @@ import { CartComponent } from './Components/cart/cart.component';
     HomeComponent,
     NavbarComponent,
     CardsComponent,
-    CartComponent
+    CartComponent,
+    DetallesComponent
   ],
   imports: [
     BrowserModule,
