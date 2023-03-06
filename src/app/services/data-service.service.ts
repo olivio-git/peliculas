@@ -6,7 +6,7 @@ import { AngularFireAuth } from '@angular/fire/compat/auth';
 import { DataService } from '../models/modelService';
 import { User } from '../models/modelUser';
 import { firebaseConfig } from 'src/environments/firebaseConfig';
-import { getAllMovies, GetMovie,getAllGenres, postMovieCar } from '../controllers/controllersMovies';
+import { getAllMovies, GetMovie,getAllGenres, postMovieCar, deleteCarMovie } from '../controllers/controllersMovies';
 import { HttpClient } from '@angular/common/http';
 import { AngularFireDatabase } from '@angular/fire/compat/database';
 import { Genero } from '../models/genero';
@@ -51,7 +51,19 @@ export class DataServiceService implements OnInit {
 
   ngOnInit() {
   }
-
+  async deleteCarMovie(keyUser:any,keyMovie:any){
+    try {
+      const confir=confirm("¿Estás seguro que deseas eliminar?");
+      if(confir){
+        const result=await deleteCarMovie(this.http,keyUser,keyMovie)
+       alert(result);
+      }else{
+        console.log('No se elmino ningun dato')
+      }
+    } catch (error) {
+      console.log(error)
+    }
+  }
   async getAllMoviesHandler() {
     try {
       const currentState = this.stateSubject.value;
@@ -67,12 +79,17 @@ export class DataServiceService implements OnInit {
   }
   async postCart(pelicula:Pelicula){
     if(this.stateSubject.value.user.user){
-      await postMovieCar(this.http,pelicula,this.stateSubject.value.user.user.uid)
-      .then(()=>{
-        alert(pelicula.title.toString()+' agregado al carrito exitosamente')
-      }).catch((error)=>{
-        alert(error.message)
-      })
+      const confir=confirm("¿Estás seguro que deseas añadir al carrito?");
+      if(confir){
+        await postMovieCar(this.http,pelicula,this.stateSubject.value.user.user.uid)
+        .then((result:any)=>{
+          alert(result.toString())
+        }).catch((error)=>{
+          alert(error.message)
+        })
+      }else{
+        console.log('No se agrego nada')
+      }
     }else{
       alert('Inicia seción por favor');
     }
@@ -211,7 +228,8 @@ export class DataServiceService implements OnInit {
         const userData = snapshot.val();
         if (!userData) {
           console.log('if');
-          const newUser = {  
+          const newUser = {
+            uid:  result.user?.uid,
             name: result.user?.displayName,
             email: result.user?.email,
             movies:{dummyProperty: ''}
