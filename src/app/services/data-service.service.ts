@@ -6,9 +6,10 @@ import { AngularFireAuth } from '@angular/fire/compat/auth';
 import { DataService } from '../models/modelService';
 import { User } from '../models/modelUser';
 import { firebaseConfig } from 'src/environments/firebaseConfig';
-import { getAllMovies, GetMovie } from '../controllers/controllersMovies';
+import { getAllMovies, GetMovie,getAllGenres } from '../controllers/controllersMovies';
 import { HttpClient } from '@angular/common/http';
 import { AngularFireDatabase } from '@angular/fire/compat/database';
+import { Genero } from '../models/genero';
 
 @Injectable({
   providedIn: 'root'
@@ -18,7 +19,9 @@ export class DataServiceService implements OnInit {
   private initialState:DataService={ //definimos nuestro estado en base a nuestro modelo DataService
     movies:[],
     movieDetail:{},
-    user:{}
+    user:{},
+    genres:[],
+    genresMovie:[]
   }
   private stateSubject = new BehaviorSubject<DataService>(this.initialState); //definimos nuestro stateSubject
   state$ = this.stateSubject.asObservable();
@@ -49,6 +52,7 @@ export class DataServiceService implements OnInit {
         ...currentState,
         movies: result
       })
+      this.GetAllGenres();
     } catch (error) {
       console.log(error);
     }
@@ -62,7 +66,31 @@ export class DataServiceService implements OnInit {
         ...currentState,
         movieDetail:result
       })
+      this.GenresMovies(this.stateSubject.value.movieDetail.genre_ids);
     }catch(error){}
+  }
+  async GetAllGenres(){
+    try{
+      const currentState=this.stateSubject.value;
+      const result=await getAllGenres(this.http);
+      this.stateSubject.next({
+        ...currentState,
+        genres:<Genero[]>result
+      })
+    }catch(error){}
+  }
+
+  GenresMovies(genre_ids:[]){
+    let GenerosPeliculas:Genero[]=[]
+    const currentState=this.stateSubject.value;
+    genre_ids.forEach((data:any)=>{
+      const genero=this.stateSubject.value.genres.find((g:Genero)=>g.id===data)
+      GenerosPeliculas.push(<Genero>genero)
+    })
+    this.stateSubject.next({
+      ...currentState,
+      genresMovie:GenerosPeliculas
+    })
   }
 
   async signInWithGoogle() {

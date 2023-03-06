@@ -1,17 +1,21 @@
 <app-navbar></app-navbar>
 <div class="page">
     <div class="backdrop" [ngStyle]="{'background-image': 'url(' + Movie.backdrop_path + ')'}">
-        <div class="pt-3 detail">
-            <div class="row justify-content-center pb-3 ">
-                <div class="col-6 detailContent">
-                    <h1 class="text-center text-uppercase fw-bold font-monospace pb-3">{{Movie.title}}</h1>
-                  <p class="fs-4 fw-light">{{Movie.overview}}</p>
-                </div>
-                <div class="col-4">
-                    <div class="card text-bg-dark">
-                        <img [src]="Movie.poster_path" class="card-img " alt="..." height="500px">
-                      </div>
-                  </div> 
-            </div>
     </div>
+    <div class="pt-3 detail">
+        <div class="row justify-content-center pb-3 ">
+            <div class="col-6 detailContent">
+                <h1 class="text-center text-uppercase fw-bold font-monospace pb-3">{{Movie.title}}</h1>
+              <p class="fs-4 fw-light">{{Movie.overview}}</p>
+              <div class="row">
+                <div class="col p-3" *ngFor="let g of genres">{{g.name}}</div>
+              </div>
+            </div>
+            <div class="col-4">
+                <div class="card text-bg-dark">
+                    <img [src]="Movie.poster_path" class="card-img " alt="..." height="500px">
+                  </div>
+              </div> 
+        </div>
+</div>    
 </div>

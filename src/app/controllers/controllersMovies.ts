@@ -2,7 +2,8 @@ import { async } from '@firebase/util';
 import { Pelicula } from '../models/modelPeliculas';
 const urls={
     getAllPeliculas:'https://angularproject-bb97e-default-rtdb.firebaseio.com/Peliculas/Peliculas.json',
-    urlImages:'https://image.tmdb.org/t/p/w500'
+    urlImages:'https://image.tmdb.org/t/p/w500',
+    getAllGenres:'https://angularproject-bb97e-default-rtdb.firebaseio.com/Peliculas/genres.json'
 }
 export const getAllMovies=(http:any)=>{
     return new Promise(async(resolve,reject)=>{
@@ -36,13 +37,17 @@ export const GetMovie=(http:any,key:any)=>{
         }
     })
 }
-export const getAllGenres=(page:any)=>{
+export const getAllGenres=(http:any)=>{
     return new Promise((resolve,reject)=>{
         try {
-                
+                http.get(urls.getAllGenres).subscribe((data:any)=>{
+                resolve(data)
+            })
         } catch (error) {
-                
+                reject(error);
         }
     })
 }
+
+
 
