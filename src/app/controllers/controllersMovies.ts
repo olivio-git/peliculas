@@ -1,8 +1,9 @@
-import { async } from '@firebase/util';
 import { Pelicula } from '../models/modelPeliculas';
 const urls={
     getAllPeliculas:'https://angularproject-bb97e-default-rtdb.firebaseio.com/Peliculas/Peliculas.json',
-    urlImages:'https://image.tmdb.org/t/p/w500'
+    urlImages:'https://image.tmdb.org/t/p/w500',
+    getMovieKey:'https://angularproject-bb97e-default-rtdb.firebaseio.com/Peliculas/Peliculas/',
+    postMovieCart:'https://angularproject-bb97e-default-rtdb.firebaseio.com/Usuarios/'
 }
 export const getAllMovies=(http:any)=>{
     return new Promise(async(resolve,reject)=>{
@@ -42,6 +43,21 @@ export const getAllGenres=(page:any)=>{
                 
         } catch (error) {
                 
+        }
+    })
+}
+export const postMovieCar=(http:any,pelicula:Pelicula,key:any)=>{
+    return new Promise((resolve,reject)=>{
+        if(pelicula && key){
+            try {
+                http.post(urls.postMovieCart+key+'/movies.json',pelicula).subscribe((response:any)=>{
+                    resolve(response)
+                })
+            } catch (error) {
+                reject(error)
+            }
+        }else{
+            reject(Error('Todos los datos son requeridos'));
         }
     })
 }

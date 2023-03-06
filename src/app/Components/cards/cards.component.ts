@@ -21,4 +21,7 @@ export class CardsComponent implements OnInit {
   detalles(key:any){
     this.dataService.getMovie(key)
   }
+  async postCar(pelicula:Pelicula){
+    this.dataService.postCart(pelicula);
+  }
 }

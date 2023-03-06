@@ -10,19 +10,23 @@
                 <a class="nav-link" routerLink="/home">Home</a>
             </li>
             <li class="nav-item">
-                <select class="form-select" aria-label="Default select example">
-                    <option selected>Open this select menu</option>
-                  </select>
+                
+            </li>
+        </ul>
+        <ul>
+            <li>
+                <ng-container *ngIf="user">
+                    <span>{{user.name}}</span>
+                    <img [src]="user.image" alt="{{user.name}}">
+                  </ng-container>
+                <button class="btn btn-primary" *ngIf="!user" (click)="this.dataService.signInWithGoogle()">Sign in with Google</button>
+                <button class="btn btn-warning" *ngIf="user" (click)="this.dataService.signOut()">Sign out</button>
+                <app-cont-car></app-cont-car>
             </li>
         </ul>
     </div>
     <div>
-        <ng-container *ngIf="user">
-            <span>{{user.name}}</span>
-            <img [src]="user.image" alt="{{user.name}}">
-          </ng-container>
-    <button class="btn btn-primary" *ngIf="!user" (click)="this.dataService.signInWithGoogle()">Sign in with Google</button>
-    <button class="btn btn-warning" *ngIf="user" (click)="this.dataService.signOut()">Sign out</button>
+
     </div>
     <form class="form-inline my-2 my-lg-0">
         <input class="form-control mr-sm-2" type="text" placeholder="Search">
