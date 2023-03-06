@@ -1,5 +1,5 @@
 <nav class="navbar navbar-expand-sm navbar-dark bg-dark">
-    <a class="navbar-brand" routerLink="/">Navbar</a>
+    <a class="navbar-brand" routerLink="/">Inicio</a>
     <button class="navbar-toggler d-lg-none" type="button" data-toggle="collapse" data-target="#collapsibleNavId" aria-controls="collapsibleNavId"
         aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
@@ -7,28 +7,33 @@
     <div class="collapse navbar-collapse" id="collapsibleNavId">
         <ul class="navbar-nav mr-auto mt-2 mt-lg-0">
             <li class="nav-item active">
-                <a class="nav-link" routerLink="/home">Home</a>
+                <a class="nav-link" routerLink="/home">Peliculas</a>
             </li>
             <li class="nav-item">
                 
             </li>
         </ul>
-        <ul>
-            <li>
-                <ng-container *ngIf="user">
-                    <span>{{user.name}}</span>
-                    <img [src]="user.image" alt="{{user.name}}">
-                  </ng-container>
-                <button class="btn btn-primary" *ngIf="!user" (click)="this.dataService.signInWithGoogle()">Sign in with Google <i class="fa-brands fa-google"></i></button>
-                <button class="btn btn-warning" *ngIf="user" (click)="this.dataService.signOut()">Sign out</button>
-                <app-cont-car></app-cont-car>
-            </li>
-        </ul>
     </div>
-    <div>
-
+    <div class="search-perfil">
+            <form class="form-inline my-2 my-lg-1">
+            <input class="form-control mr-sm-2" type="text" placeholder="Buscar">
+            </form>
+            <div class="container-login">
+                <button class="google-login" *ngIf="!user" (click)="this.dataService.signInWithGoogle()">
+                    Iniciar con 
+                    <img class="" src="../../../assets/google.png" alt="Iniciar con Google">
+                </button>
+                <div class="img-name" *ngIf="user">
+                    <img class="img-perfil" [src]="user.image" alt="{{user.name}}">
+                    <span>{{user.name}} </span>
+                    <button class="btn btn-danger" *ngIf="user" (click)="this.dataService.signOut()">Cerrar seción</button>
+                    <button class="btn" *ngIf="table" >
+                        <i class="fa-solid cart fa-cart-shopping"
+                        routerLink="cartDetails/{{user.uid}}"
+                        *ngIf="user"> {{count.length}}
+                    </i>
+                    </button>
+                </div>
+            </div>
     </div>
-    <form class="form-inline my-2 my-lg-0">
-        <input class="form-control mr-sm-2" type="text" placeholder="Search">
-    </form>
 </nav>

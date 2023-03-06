@@ -1,15 +1,18 @@
-<div class="row">
+<div class="row page">
+  <h1>Todos</h1>
     <div class="col-12 container-cards" *ngIf="movies" >
         <div class="card" *ngFor="let movie of movies">
             <img [src]="movie.poster_path" class="card-img-top" alt="...">
             <div class="card-body">
               <h5 class="card-title">{{movie.title}}</h5>
               <p class="card-text">{{movie.release_date}}</p>
-              <p class="card-text">{{movie.key}}</p>
-              <a class="btn btn-success" (click)="detalles(movie.key)" routerLink="/detalles/{{movie.key}}" >Ver mas</a>
-              <a class="btn btn-warning" (click)="postCar(movie)">
-                Añadir al carrito
-              </a>
+              <div class="btns">
+                <a class="btn btn-danger" (click)="detalles(movie.key)" routerLink="/detalles/{{movie.key}}" >Ver mas</a>
+                <button class="btn btn-warning car-add" (click)="postCar(movie)">
+                  Agregar
+                  <i class="fa-solid cart-add fa-cart-shopping"></i>
+                </button>
+              </div>
             </div>
           </div>
     </div>

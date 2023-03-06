@@ -11,8 +11,9 @@ export class ContCarComponent {
   constructor(private dataService: DataServiceService){
     this.dataService.userTable$.subscribe(state=>{
       if(state.initialUserTable){
-        this.count=Object.values(state.initialUserTable.movies);
+        this.count=Object.values(state.initialUserTable);
       }
+      console.log(this.count.length)
     })
   }
 }

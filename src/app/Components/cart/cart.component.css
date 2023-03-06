@@ -1,0 +1,19 @@
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+table{
+    color: whitesmoke;
+    width: 80%;
+}
+.container-car{
+    padding: 10px;
+}
+.fa-trash{
+    color:crimson;
+}
+.img-poster{
+    width: 80px;
+    height: 90px;
+}

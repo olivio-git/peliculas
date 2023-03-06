@@ -10,6 +10,7 @@ import { distinctUntilChanged } from 'rxjs/operators';
 export class NavbarComponent implements OnInit {
   user: any;
   table:any;
+  count:any;
   constructor(public dataService: DataServiceService) {
     this.dataService.state$.pipe(
       distinctUntilChanged((prev, curr) => prev.user.user === curr.user.user)
@@ -19,7 +20,10 @@ export class NavbarComponent implements OnInit {
     this.dataService.userTable$.pipe(
       distinctUntilChanged((prev, curr) => prev.initialUserTable === curr.initialUserTable)
     ).subscribe((state) => {
-      this.table = state.initialUserTable
+      if(state.initialUserTable){
+        this.table = state.initialUserTable;
+        this.count=Object.values(state.initialUserTable.movies);
+      }
     });
   }
 

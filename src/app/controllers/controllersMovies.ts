@@ -4,7 +4,8 @@ const urls={
     urlImages:'https://image.tmdb.org/t/p/w500',
     getAllGenres:'https://angularproject-bb97e-default-rtdb.firebaseio.com/Peliculas/genres.json',
     getMovieKey:'https://angularproject-bb97e-default-rtdb.firebaseio.com/Peliculas/Peliculas/',
-    postMovieCart:'https://angularproject-bb97e-default-rtdb.firebaseio.com/Usuarios/'
+    postMovieCart:'https://angularproject-bb97e-default-rtdb.firebaseio.com/Usuarios/',
+    deleteCarMovie:'https://angularproject-bb97e-default-rtdb.firebaseio.com/Usuarios/'
 }
 export const getAllMovies=(http:any)=>{
     return new Promise(async(resolve,reject)=>{
@@ -54,12 +55,28 @@ export const postMovieCar=(http:any,pelicula:Pelicula,key:any)=>{
         if(pelicula && key){
             try {
                 http.post(urls.postMovieCart+key+'/movies.json',pelicula).subscribe((response:any)=>{
-                    resolve(response)
+                    resolve('Agregado exitosamente!')
                 })
             } catch (error) {
                 reject(error)
             }
         }else{
+            reject(Error('Todos los datos son requeridos'));
+        }
+    })
+}
+export const deleteCarMovie=(http:any,keyUser:any,keyMovie:any)=>{
+    return new Promise((resolve,reject)=>{
+        if(keyUser && keyMovie){
+            try {
+                http.delete(urls.deleteCarMovie+keyUser+'/movies/'+keyMovie+'.json').subscribe((response:any)=>{
+                    resolve('Eliminación completa!')
+                })
+            } catch (error) {
+                reject(error)
+            }
+        }
+        else{
             reject(Error('Todos los datos son requeridos'));
         }
     })
