@@ -9,6 +9,9 @@ import { firebaseConfig } from 'src/environments/firebaseConfig';
 import { getAllMovies, GetMovie } from '../controllers/controllersMovies';
 import { HttpClient } from '@angular/common/http';
 import { AngularFireDatabase } from '@angular/fire/compat/database';
+import jwt_decode from 'jwt-decode';
+import { DecodedToken } from '../models/dekodedToken';
+
 
 @Injectable({
   providedIn: 'root'
@@ -35,6 +38,8 @@ export class DataServiceService implements OnInit {
   ) {
     this.getAllMoviesHandler();
     firebase.initializeApp(firebaseConfig.firebase);
+    this.checkAuth()
+    console.log(this.stateSubject.value)
     // Inicializar el subject de userTable
   }
 
@@ -53,6 +58,56 @@ export class DataServiceService implements OnInit {
       console.log(error);
     }
   }
+  async checkAuth() {
+    let obj: User;
+    const currentTable=this.userTableSubject.value;
+
+    const currentState = this.stateSubject.value;
+    const token:any = localStorage.getItem('authToken');
+    const decodedToken = jwt_decode(token) as DecodedToken;
+        obj = {
+        uid: decodedToken.user_id,
+        name: decodedToken.name,
+        email: decodedToken.email,
+        image: decodedToken.picture
+        }
+        this.stateSubject.next({
+          ...currentState,
+        user: {
+        user: obj,
+        token: token
+        }
+        });
+        const database = firebase.database();
+        const userRef = database.ref('Usuarios/' + decodedToken.user_id);
+        userRef.once('value', (snapshot) => {
+        const userData = snapshot.val();
+        if (!userData) {
+          console.log('si hay if')
+          const newUser = {  
+            name: decodedToken?.name,
+            email: decodedToken?.email,
+            cart: {}
+          };
+          this.userTableSubject.next({
+            ...currentTable,
+            ...{ initialUserTable: newUser }
+          })        
+          userRef.set(newUser);
+        } else {
+          console.log('no hay else')
+          userRef.on('value', (snapshot) => {
+            const userData = snapshot.val();
+            console.log(userData)
+            this.userTableSubject.next({
+              ...currentTable,
+              ...{ initialUserTable: userData }
+            });
+          });
+        }
+      });
+  }
+  
 
   async getMovie(key:any){
     try{
@@ -98,7 +153,7 @@ export class DataServiceService implements OnInit {
           const newUser = {  
             name: result.user?.displayName,
             email: result.user?.email,
-            cart: []
+            cart: {}
           };
           this.userTableSubject.next({
             ...currentTable,
@@ -143,29 +198,3 @@ export class DataServiceService implements OnInit {
 
 
 
-// async checkAuth() {
-  //   console.log('Check')
-  //   const token = localStorage.getItem('authToken');
-  //   console.log(token)
-  //   if (token) {
-  //     try {
-  //       const userCredential = await firebase.auth().signInWithCustomToken(token);
-  //       const user = userCredential.user;
-  //       const obj: User = {
-  //         name: user?.displayName,
-  //         email: user?.email,
-  //         image: user?.photoURL,
-  //       }
-  //       const currentState = this.stateSubject.value;
-  //       this.stateSubject.next({
-  //         ...currentState,
-  //         user:{
-  //           user: obj,
-  //           token: token
-  //         }
-  //       });
-  //     } catch (error) {
-  //       console.log('Error en la autenticación automática', error);
-  //     }
-  //   }
-  // }
