@@ -1,0 +1,28 @@
+.landing-png{
+    width: 100px;
+}
+.img-landing{
+    width: 100%;
+}
+.btn-redir{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content:center;
+}
+.btnn{
+    color: whitesmoke;
+    background-color: crimson;
+    border:none;
+    width: 200px;
+    height:50px;
+}
+.btnn:hover{
+    background-color:aqua;
+    color: black;
+}
+h1{
+    font-family: monospace;
+    font-weight:bold;
+    color: whitesmoke;
+}

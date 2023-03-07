@@ -6,7 +6,7 @@
         <div class="row justify-content-center pb-3 ">
             <div class="col-6 detailContent">
                 <h1 class="text-center text-uppercase fw-bold font-monospace pb-3">{{Movie.title}}</h1>
-                <p><i class="fa-solid fa-cart-shopping" ></i></p>
+                <p><i class="fa-solid fa-cart-shopping" (click)="postCar(Movie)"></i></p>
                 <div class="row">
                   <div class="col text-center pb-3 border-end border-start border-light" *ngFor="let g of genres">{{g.name}}</div>
                 </div>

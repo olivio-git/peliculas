@@ -17,6 +17,9 @@ export class DetallesComponent implements OnInit {
       console.log(this.Movie)
     })
   }
+  async postCar(pelicula:Pelicula){
+    this.dataService.postCart(pelicula);
+  }
   Movie=<Pelicula>{}
   genres:Genero[]=[]
 }
