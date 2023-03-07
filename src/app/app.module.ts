@@ -21,6 +21,7 @@ import { DetallesComponent } from './Components/detalles/detalles.component';
 import { CartComponent } from './Components/cart/cart.component';
 import { ContCarComponent } from './Components/cont-car/cont-car.component';
 import { FiltrosComponent } from './Components/filtros/filtros.component';
+import { FooterComponent } from './Components/footer/footer.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -33,7 +34,8 @@ import { FiltrosComponent } from './Components/filtros/filtros.component';
     CartComponent,
     DetallesComponent,
     ContCarComponent,
-    FiltrosComponent
+    FiltrosComponent,
+    FooterComponent
   ],
   imports: [
     BrowserModule,
