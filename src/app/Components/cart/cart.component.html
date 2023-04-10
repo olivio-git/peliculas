@@ -1,0 +1,42 @@
+<div class="row page">
+    <div class="col-12">
+        <app-navbar></app-navbar>
+    </div>
+    <div class="col-12 container-car">
+        <div class="col-4 body-car">
+            <div class="card text-left" *ngIf="user">
+              <img class="card-img-top img-perfil" src="{{user.image}}" alt="">
+            </div>
+            <p>Usuario</p>
+        </div>
+        <div class="col-8">
+            <div class="body-car" *ngIf="user">
+                <h1>Usuario: {{user.name}}</h1>
+                <h2>Correo: {{user.email}}</h2>
+                <table class="table">
+                    <thead>
+                      <tr>
+                        <th scope="col">ID</th>
+                        <th scope="col">Titulo</th>
+                        <th scope="col">Imagen</th>
+                        <th>#</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr *ngFor="let mov of union;">
+                        <th scope="row">{{mov.id}}</th>
+                        <td>{{mov.movie.title}}</td>
+                        <td>
+                            <img class="img-poster" src={{mov.movie.poster_path}} alt="imagen">
+                        </td>
+                        <td>
+                            <i class="fa-solid fa-trash" (click)="key(mov.key)" ></i>
+                        </td>
+                      </tr>
+                    </tbody>
+                  </table>
+            </div>
+        </div>
+    </div>
+</div>
+<app-footer></app-footer>

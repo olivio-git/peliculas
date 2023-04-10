@@ -1,0 +1,48 @@
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+.page{
+    padding: 10px;
+}
+h1{
+    color: whitesmoke;
+    font-family:monospace;
+}
+.card{
+    border: none;
+}
+.btns{
+    padding: 5px;
+    width: 100%;
+    display: flex;
+    flex-direction:row;
+    align-items:center;
+    justify-content: space-between;
+}
+.card-body{
+    border-radius: 0px 0px 5px 5px;
+    font-family:fantasy;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-between;
+    padding: 2px;
+    background: #c31432;  /* fallback for old browsers */
+    background: -webkit-linear-gradient(to right, #240b36, #c31432);  /* Chrome 10-25, Safari 5.1-6 */
+    background: linear-gradient(to right, #240b36, #c31432); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+    
+}
+.cart-add{
+    color: green;
+    font-size: 20px;
+}
+.btn{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    width:40%;
+    height: 40px;
+}
